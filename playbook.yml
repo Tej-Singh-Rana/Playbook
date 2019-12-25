@@ -1,0 +1,34 @@
+---
+ - name: installing httpd service
+   hosts: test
+   remote_user: root
+   tasks:
+   - name: adding firewall service
+     yum:
+       name: firewalld
+       state: latest
+   - name: starting service and enabling
+     service:
+         name: firewalld
+         state: started
+         enabled: yes
+   - name: installing httpd via yum
+     yum:
+        name: httpd
+        state: latest
+   - name: starting service and enabling
+     service:
+        name: httpd
+        state: started
+        enabled: yes
+   - name: adding service in http
+     firewalld:
+          service: http
+          permanent: yes
+          state: enabled
+          immediate: yes
+   - name: adding content
+     copy:
+        content: "hello this testing page to add in instance"
+        dest: /var/www/html/index.html
+
