@@ -1,0 +1,20 @@
+---
+ - name: installing vsftpd
+   hosts: test
+   remote_user: root
+   tasks:
+     - name: installing service
+       yum:
+        name: vsftpd
+        state: latest
+     - name: service restart and enable   
+       service:
+          name: vsftpd
+          state: started
+          enabled: yes
+     - name: adding port in firewalld
+       firewalld:
+          service: ftp
+          state: enabled
+          permanent: yes
+          immediate: yes     
