@@ -1,0 +1,45 @@
+---
+ - name: Enable internet services
+   hosts: group
+   remote_user: root
+   tasks:
+     - name: Start and enable  firewall service.
+       service:
+           name: firewalld
+           name: httpd
+           state: started
+           enabled: yes
+     - name: To install following packages - php, php-mysql and mariadb-server 
+       yum:
+          name: php
+          name: php-mysql
+          name: mariadb-server
+          state: latest
+     - name: Adding port in firewall service.
+       firewalld:
+           port: 80/tcp
+           permanent: yes
+           state: enabled
+           immediate: yes
+     - name: To start and enable mariadb-server.
+       service:
+           name: mariadb
+           state: started
+           enabled: yes
+     - name: Content copy from source to destination location.
+       get_url:
+           url: 
+           dest: /var/www/html/index.html
+           mode: 0644
+     - name: With help of uri module
+       uri:
+         url: 
+         status_code: 200
+
+
+
+
+
+
+
+
