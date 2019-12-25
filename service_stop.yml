@@ -1,0 +1,12 @@
+---
+ - name: Playbook to stop service!!
+   hosts: test
+   remote_user: root
+   tasks:
+    - name: To stop ftp and http service!!
+      service:
+         name: vsftpd
+         name: httpd
+         state: stopped
+         enabled: no
+
