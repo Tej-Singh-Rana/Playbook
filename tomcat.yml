@@ -1,0 +1,50 @@
+---
+ - name: Installation process of tomcat.
+   hosts: server
+   remote_user: root
+   vars:
+     - site :  https://www-eu.apache.org/dist/tomcat/tomcat-8/v8.5.50/bin/apache-tomcat-8.5.50.tar.gz
+       tomcat: apache-tomcat-8.5.50
+   tasks:
+     - name: Yum module.
+       yum:
+         name: java
+         state: latest
+     - name: User module.
+       user:
+         name: tomcat
+         shell: /sbin/nologin
+         comment: "Only for tomcat"
+     - name: File module.
+       file:
+         name: /opt/tomcat
+         state: directory
+         owner: tomcat
+         group: tomcat
+         recurse: yes
+         mode: '0755'
+     - name: Download tomcat.
+       get_url:
+            url: "{{ site }}"
+            dest: /opt/
+     - name: Extracting archive file.
+       unarchive:
+               src: /opt/{{ tomcat }}.tar.gz
+               dest: /opt/tomcat/
+               remote_src: yes
+     - name: File permission.
+       file:
+         path: /opt/tomcat/{{ tomcat }}/bin/startup.sh
+         mode: u=rwx,g=rx,o=x
+     - name : Owner and Group
+       file:
+         path: /opt/tomcat/{{ tomcat }}/
+         owner: tomcat
+         group: tomcat
+         recurse: yes
+     - name: Starting tomcat server.
+       shell: /opt/tomcat/{{ tomcat }}/bin/startup.sh
+       #   - name: Copy content.
+       #copy:
+       # content: "Tomcat working perfectly."
+
