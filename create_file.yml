@@ -1,0 +1,18 @@
+---
+ - name: Creating a file into the target machine.
+   hosts: all
+   remote_user: root
+   tasks:
+    - name: Create a file.       
+      file:
+        path: /opt/network.conf
+        state: touch
+        mode: '0644'
+    - name: Create a directory.
+      file:
+        path: /opt/networks
+        state: directory
+    
+            
+
+
