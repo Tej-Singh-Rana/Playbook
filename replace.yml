@@ -1,0 +1,11 @@
+---
+ - hosts: all
+   become: true
+   remote_user: root
+   tasks:
+     - name: Using Replace module.
+       replace:
+          path: /opt/network.conf
+          regexp: '[n|N]ologin'
+          after: '/sbin/'
+          replace: 'bash'
