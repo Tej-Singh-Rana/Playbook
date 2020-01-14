@@ -1,0 +1,14 @@
+---
+ - hosts: all
+   remote_user: root
+   tasks:
+     - name: Copy content to a file.
+       file:
+         path: /root/code.conf
+         state: touch
+         mode: '0644'
+     - name: Adding content
+       copy:
+         content: "Hello programmer!! Have a good programming\n"
+         dest: /root/code.conf
+
