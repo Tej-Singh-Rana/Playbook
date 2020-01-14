@@ -1,0 +1,18 @@
+---
+ - name: Creating Directory
+   hosts: server
+   become: true
+   remote_user: root
+   tasks:
+     - name: Creating User
+       user:
+         name: ansible
+         shell: /bin/bash
+     - name: Create Directory
+       file:
+        path: /root/adhoc
+        owner: ansible
+        group: ansible
+        state: directory
+        mode: '0775'
+
