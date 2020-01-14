@@ -1,0 +1,16 @@
+---
+ - name: Creating User
+   hosts: server
+   become: true
+   remote_user: root
+   tasks:
+     - name: Creating User
+       user:
+         name: adhoc
+         shell: /bin/bash
+         
+     - name: Deleting User with home dir.
+       user:
+         name: adhoc
+         state: absent
+         remove: yes 
