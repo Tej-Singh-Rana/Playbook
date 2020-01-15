@@ -1,0 +1,41 @@
+---
+ - name: Installing apache package.
+   hosts: local
+   remote_user: root
+#  become: yes
+   vars:
+      web_pkg : httpd
+      firewall_pkg: firewalld
+      web_service: httpd
+      firewall_service: firewalld
+      rule: http
+   tasks:
+     - name: Installing web and firewall package.
+       yum:
+         name:
+           - "{{ web_pkg }}"
+           - "{{ firewall_pkg }}"
+         state: latest
+     - name: Service start and enable of "{{ web_pkg }}" & "{{ firewall_pkg }}".
+       service:
+           name: "{{ web_pkg }}"
+           state: restarted
+           enabled: yes
+
+     - name: "{{ firewall_pkg }}"
+       service: 
+            name: "{{ firewall_pkg }}"
+            state: restarted
+            enabled: yes
+     - name: Adding service "{{ rule }}" in firewall.
+       firewalld:
+           service: "{{ rule }}"
+           state: enabled
+           permanent: yes
+           immediate: yes
+   # - firewalld:
+           #service: "{{ rule }}"
+           #port: ---
+           #permanent: yes
+           #state: enabled 
+            
