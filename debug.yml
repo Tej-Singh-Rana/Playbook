@@ -1,0 +1,18 @@
+---
+ - hosts: local
+   become: true
+   tasks:
+     - name: printing variable.
+       shell: echo " adhoc networks"
+       register: adhoc_networks
+
+     - name: Debug module
+       debug:
+          var: adhoc_networks
+
+     - name: Printing variable with output.
+       debug:
+          var: adhoc_networks.stdout
+
+
+          
