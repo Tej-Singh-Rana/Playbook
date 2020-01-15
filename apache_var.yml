@@ -33,9 +33,8 @@
            state: enabled
            permanent: yes
            immediate: yes
-   # - firewalld:
-           #service: "{{ rule }}"
-           #port: ---
-           #permanent: yes
-           #state: enabled 
-            
+     - firewalld:
+           port: 80/tcp
+           permanent: yes
+           state: enabled 
+           immediate: yes              #Reload the changes.
